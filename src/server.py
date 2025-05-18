@@ -47,7 +47,6 @@ def get_knowledge_base() -> str:
     except Exception as e:
         return f"Error: {str(e)}"
 
-
 # Run the server
 if __name__ == "__main__":
     mcp.run(transport="sse")

@@ -142,19 +142,24 @@ class MCPOpenAIClient:
     async def cleanup(self):
         """Clean up resources."""
         await self.exit_stack.aclose()
+        await self.openai_client.close()
 
 
 async def main():
     """Main entry point for the client."""
     client = MCPOpenAIClient()
-    await client.connect_to_server("http://localhost:8050/sse")
+    try:
+        await client.connect_to_server("http://localhost:8050/sse")
 
-    # Example: Ask about company vacation policy
-    query = "What is our company's vacation policy?"
-    print(f"\nQuery: {query}")
+        # Example: Ask about company vacation policy
+        query = "What is our company's vacation policy?"
+        print(f"\nQuery: {query}")
 
-    response = await client.process_query(query)
-    print(f"\nResponse: {response}")
+        response = await client.process_query(query)
+        print(f"\nResponse: {response}")
+    finally:
+        # Ensure cleanup happens even if there's an error
+        await client.cleanup()
 
 
 if __name__ == "__main__":

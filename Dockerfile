@@ -13,11 +13,10 @@ RUN uv venv
 RUN uv pip install -r requirements.txt
 
 # Copy application code
-COPY src/server.py .
-COPY src/client.py .
+COPY src/ ./src/
 
 # Expose the port the server runs on
 EXPOSE 8050
 
 # Command to run the server
-CMD ["uv", "run", "server.py"] 
+CMD ["uv", "run", "src/server.py"] 
